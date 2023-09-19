@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fibhub</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+<style>
+  #table-child{
+    scrollbar-width: thin;
+    scrollbar-color: #777 #555;
+  }
+  #table-child::-webkit-scrollbar{
+    width: 10px;
+    border-radius: 10px;
+  }
+  #table-child::-webkit-scrollbar-thumb{
+    background-color: rgba(128, 128, 128, 0.724);
+  }
+  #table-child::-webkit-scrollbar-track{
+    background-color: rgba(255, 68, 0, 0.749);
+  }
+
+    #slide{
+        display: flex;
+        flex-direction: row;
+        gap: 30px;
+    }
+    #slide1{
+        display: grid;
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+    }
+    #idea{
+     margin-top: 300px;
+    }
+    #table{
+      height: 90vh;
+      width: 50%;
+      background-color: blue;
+      padding:40px;
+      padding-left: 110px;
+    }
+    #table-child{
+      height: 80vh;
+      width: 90%;
+      background-color: azure;
+      overflow-y: auto;
+    }
+    #build{
+      width: 50%;
+      float: right;
+    }
+    #screen{
+      height: 100px;
+      width: 100px;
+      border-radius: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #image:hover{
+      -webkit-animation: spin 1s linear infinite;
+      -moz-animation: spin 1s linear infinite;
+      animation: spin 1s linear infinite;
+    }
+    @-webkit-keyframes spin{
+      100%{-webkit-transform: rotate(360deg);}
+    }
+    @-moz-keyframes spin{
+      100%{-webkit-transform: rotate(360deg);}
+    }
+    @keyframes spin{
+      100%{-webkit-transform: rotate(360deg);}
+    }
+    .gallery{
+      width: 60%;
+    }
+    .gallery-container{
+      align-items: center;
+      display: flex;
+      height: 600px;
+      margin:  auto;
+      max-width: 1000px;
+      position: relative;
+    }
+   .gallery-item{
+      height: 200px;
+      opacity: 0;
+      position: absolute;
+      transition: all 0.3s ease-in-out;
+      width: 200px;
+      z-index: 0;
+      border-radius: 15px;
+      background-size: contain;
+    }
+    .gallery-item-2{
+      left: 15%;
+      opacity: .4;
+      transform: translateX(-50%);
+    }
+    .gallery-item-1{
+      height: 250px;
+      opacity: 0.8;
+      width: 280px;
+      z-index: 1;
+    }
+    .gallery-item-2{
+      opacity: 1;
+      height: 250px;
+      left: 55%;
+      width: 280px;
+      transform: translateX(-50%);
+    }
+    .gallery-item-3{
+      box-shadow: -2px 5px 33px 6px rgba(0,0,0,0.35);
+      height: 300px;
+      opacity: 1;
+      left: 35%;
+      transform: translateX(-50%);
+      width: 330px;
+      z-index: 2;
+    }
+    .gallery-controls{
+      display: flex;
+      justify-content: center;
+      margin: 25px 0;
+      height: 100px;
+    }
+    #small{
+      display: none;
+    }
+    #map-cover{
+       background-image: url("map.png");
+       background-size: cover;
+       background-repeat: no-repeat;
+       width: 80%;
+       height: 80vh;
+       margin-left: 150px;
+    }
+    #operator-image{
+      padding-top: 80px;
+      width: 40%;
+    }
+    #offer-me{
+      display: none;
+    }
+    .circle-image{
+      width: 50%;
+    }
+    #mini{
+      display: none;
+    }
+    .footer{
+      height: 70vh;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+    }
+    .footer-part{
+      width: 50%;
+      height: 70vh;
+    }
+    .footer-part-1{
+      width: 50%;
+      height: 70vh;
+    }
+    #post{
+      width: 100%;
+      height: 12vh;
+      margin-top: 30px;
+    }
+    #post-child{
+      width: 50%;
+      height: 6vh;
+      z-index: 1;
+      transform: translateY(-20px);
+
+    }
+    #fill{
+      width: 21%;
+      height: 5vh;
+      background-color: aqua;
+      border-radius: 20px;
+    }
+    #general-item{
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+    }
+    .movement{
+      margin-left: 480px;
+      margin-top: -200px;
+      gap: 30px;
+    }
+    .up,
+    .down{
+      background-color: aqua;
+      height: 40px;
+      width: 40px;
+      border-radius: 20px;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    @media screen and (max-width:980px) {
+      #banner{
+            display: none;
+        }
+        #list{
+            width: 100%;
+        }
+        #table{
+          display: none;
+        }
+        #build{
+          width: 100%;
+        }
+        #group{
+          justify-content: center;
+        }
+        #right{
+          display: none;
+        }
+        #small{
+      display: grid;
+      width: 100%;
+    }
+    #map-cover{
+      display: flex;
+      flex-direction: column-reverse;
+      margin-left: 100px;
+    }
+    #image-write-up{
+      width: 180%;
+      justify-content: center;
+      align-items: center;
+      margin-left: -150px;
+    }
+    #Hmmmmm{
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      margin-left: 0px;
+      float: left;
+    }
+    #image-image{
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      margin-left: -70px;
+      margin-top: 50px;
+    }
+    #operator-image{
+      width: 100%;
+      padding-top: 0px;
+    }
+    #map-cover{
+       background-image: url("map.png");
+       background-size: cover;
+       background-repeat: no-repeat;
+       width: 50%;
+       height: 80vh;
+       margin-left: 150px;
+       display: none;
+    }
+    #develop{
+      display: flex;
+      flex-direction: column-reverse;
+    }
+    #offer{
+     
+      display: none;
+    }
+    #offer-image{
+      width: 250%;
+      margin-top: 200px;
+      margin-left: -195px;
+    }
+    #offer-me{
+      display: grid;
+    }
+    #offer-image-me{
+      width: 0%;
+    }
+    .general{
+      display: flex;
+      flex-direction: column;
+    }
+    #general-circle{
+      display: none;
+    }
+    #mini{
+      display: grid;
+    }
+    .footer{
+      height: 70vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .footer-part{
+      width: 100%;
+      height: 70vh;
+      margin-left: 0px;
+    }
+    .footer-part-1{
+      width: 100%;
+      height: 70vh;
+    }
+    #button{
+      width: 25%;
+    }
+    #text{
+      width: 50%;
+    }
+    #Hmmmmm{
+      display: none;
+    }
+  }
+</style>
+<nav class="navbar navbar-expand-lg navbar-light float-end m-3 mt-3">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Blog</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Hire engineers</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">join Fichub</a>
+        </li>
+        <button type="button" class="btn btn-secondary btn-lg float-end bg-danger w-15 h-auto d-inline-block
+p-2 text-center btn-sm rounded">Start a project</button>
+      </ul>
+    </div>
+  </div>
+</nav>
+<img src="img/menaget-removebg-preview.png" class="m-5 mt-3" style="width: 150px;" alt="...">
+<div class="container-xxl bg-light">
+<div class="container-sm fw-bold fs-1">Hire the finest brains on<br> your product development<br> team.</div>
+<div class="container-sm mt-3 fs-5">Accelerate your growth with our highly-skilled, vetted, and remote<br> product development team that fits into your timezone at an affordable<br> cost.</div>
+<div class="btn m-5 mt-3" role="group" aria-label="Basic outlined example">
+    <button type="button" class="btn bg-primary text-light btn-lg" style="margin-left:50px;">Hiring Engineers</button>
+    <button type="button" class="btn bg-light text-danger btn-lg border-danger"><i class="bi bi-play-circle p-3"></i>Show how Fichub works</button>
+  </div>
+    <img src="img/banner-removebg-preview.png" id="banner" class="float-end col-sm-6" style="width: 48%; margin-top: -250px;">
+    <p class="text-danger fs-3" style="margin-left: 100px;">Trusted By</p>
+    <div id="carouselExampleSlidesOnly" id="list" class="carousel slide col-sm" style="width: 50%; margin-left: 100px;" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div id="slide" class="carousel-item active col-sm-6">
+            <img src="img/part1.png" class="d-block w-20" style="width: 100px;" alt="...">
+            <img src="img/part2.png" class="d-block w-20" style="width: 100px;" alt="...">
+            <img src="img/part6.png" class="d-block w-20" style="width: 100px;" alt="...">
+            <img src="img/part1.png" class="d-block w-20" style="width: 100px;" alt="...">
+          </div>
+          <!-- <div id="slide1" class="carousel-item">
+            <img src="img/part1.png" class="d-block w-20" style="width: 100px;" alt="...">
+            <img src="img/part6.png" class="d-block w-20" style="width: 100px;" alt="...">
+            <img src="img/part7.png" class="d-block w-20" style="width: 100px;" alt="...">
+          </div> -->
+        </div>
+      </div>
+      <div class="container-xxl bg-light" id="group">
+        <div class="container-xxl bg-light" id="build">
+          <div class="mt-5">
+          <p class="fs-1 fw-bold">Let’s build together.</p>
+          <p>Do you have an idea or a problem you want to solve? Digital Product
+          <br> Engineering is our forte. We simplify complex business challenges and
+          <br> guide you through creating viable and scalable solutions.</p>
+          <p>We will work closely with you to seamlessly transform your ideas into
+            <br> world-class, exceptional products that’ll lead to growth at a pocket-
+            <br>friendly fee. Just bring the idea, we’ll take it from there.</p>
+            <button type="button" class="btn btn-light border-primary btn-lg text-primary">Start a Project</button>
+            </div>
+        </div>
+        <div id="progressbar"></div>
+        <div id="scrollpath"></div>
+        <div id="table" class="bg-light">
+          <div class="shadow-lg p-3 mb-5 bg-body rounded-3" id="table-child">
+             <div class="bg-light shadow-lg" id="post">
+              <div class="shadow-lg bg-light" id="post-child">
+                    <div class="fs-6 fw-bold text-danger text-center">Frontend Developer</div>
+              </div>
+                   <div id="general-item">
+                <div class="bg-" id="fill" style="background-color: rgba(255, 99, 71, 0.532);">
+                  <div class="text-danger text-center mt-1">React</div>
+                </div>
+                <div id="fill" style="background-color: rgba(129, 129, 129, 0.596);">
+                  <div class="text-center mt-1 text-secondary">Angular</div>
+                </div>
+                <div id="fill" style="background-color: rgba(129, 129, 129, 0.596);">
+                   <div class="text-center mt-1 text-secondary">Vue</div>
+                </div>
+                <div id="fill" style="background-color: rgba(255, 68, 0, 0.626);">
+                  <div class="text-center mt-1 text-danger">More...</div>
+                </div>
+              </div>  
+             </div>
+             <div class="bg-light shadow-lg" id="post">
+              <div class="bg-light shadow-lg" id="post-child">
+                        <div class="fs-6 fw-bold text-primary text-center">Backend Developer</div>
+                      </div>
+                      <div id="general-item">
+                        <div id="fill" style="background-color: rgba(255, 99, 71, 0.532);">
+                          <div class="text-danger text-center">Php</div>
+                        </div>
+                        <div id="fill" style="background-color: rgba(129, 129, 129, 0.596);">
+                          <div class="text-center text-secondary">Python</div>
+                        </div>
+                        <div id="fill" style="background-color: rgba(129, 129, 129, 0.596);">
+                           <div class="text-center text-secondary">Java</div>
+                        </div>
+                        <div id="fill" style="background-color: rgba(255, 68, 0, 0.626);">
+                          <div class="text-center text-secondary">Go</div>
+                       </div>
+                        <div id="fill" style="background-color: rgba(0, 128, 0, 0.541);">
+                          <div class="text-center text-success">More...</div>
+                        </div>
+                      </div>  
+              </div>
+             <div class="bg-light shadow-lg" id="post">
+              <div class="bg-light shadow-lg" id="post-child">
+                   <div class="fs-6 fw-bold text-primary text-center">Cloud Engineers</div>
+              </div>
+              <div id="general-item">
+                <div id="fill" style="background-color: rgba(255, 99, 71, 0.532);">
+                  <div class="text-danger text-center">AWS</div>
+                </div>
+                <div id="fill" style="background-color: rgba(129, 129, 129, 0.596);">
+                  <div class="text-center text-secondary">Azure</div>
+                </div>
+                <div id="fill" style="background-color: rgba(129, 129, 129, 0.596);">
+                   <div class="text-center text-secondary">GCP</div>
+                </div>
+                <div id="fill" style="background-color: rgba(255, 68, 0, 0.626);">
+                  <div class="text-center text-danger">More...</div>
+                </div>
+              </div>  
+
+             </div>
+             <div class="bg-light shadow-lg" id="post">
+              <div class="bg-light shadow-lg" id="post-child">
+                    <div class="fs-6 fw-bold text-success text-center">QA Engineers</div>
+              </div>
+              <div id="general-item">
+                <div id="fill" style="background-color: rgba(255, 99, 71, 0.532);">
+                  <div class="text-danger text-center">CSTE</div>
+                </div>
+                <div id="fill" style="background-color: rgba(129, 129, 129, 0.596);" >
+                  <div class="text-center text-secondary">CMST</div>
+                </div>
+                <div id="fill" style="background-color: rgba(129, 129, 129, 0.596);">
+                   <div class="text-center text-secondary">CAST</div>
+                </div>
+                <div id="fill" style="background-color: rgba(255, 68, 0, 0.626);">
+                  <div class="text-center text-danger">More...</div>
+                </div>
+              </div>  
+             </div>
+             <div class="bg-light shadow-lg" id="post">
+              <div class="bg-light shadow-lg" id="post-child">
+                       <div class="fs-6 fw-bold text-danger text-center">Project Managers</div>
+              </div>
+              <div id="general-item">
+                <div id="fill" style="background-color: rgba(255, 99, 71, 0.532);">
+                  <div class="text-danger text-center">PMP</div>
+                </div>
+                <div id="fill"  style="background-color: rgba(129, 129, 129, 0.596);">
+                  <div class="text-center text-secondary">ITIL</div>
+                </div>
+                <div id="fill" style="background-color: rgba(129, 129, 129, 0.596);">
+                   <div class="text-center text-secondary">CSM</div>
+                </div>
+                <div id="fill" style="background-color: rgba(255, 68, 0, 0.626);">
+                  <div class="text-center text-danger">CEMC</div>
+               </div>
+                <div id="fill"  style="background-color: rgba(0, 128, 0, 0.541);">
+                  <div class="text-center text-success">More...</div>
+                </div>
+              </div>  
+             </div>
+             <div class="bg-light shadow-lg" id="post">
+              <div class="bg-light shadow-lg" id="post-child">
+                        <div class="fs-6 fw-bold text-danger text-center">Mobile Developers</div>
+              </div>
+              <div id="general-item">
+                <div id="fill" style="background-color: rgba(255, 99, 71, 0.532);">
+                  <div class="text-center text-danger">IOS</div>
+                </div>
+                <div id="fill"  style="background-color: rgba(129, 129, 129, 0.596);">
+                  <div class="text-center text-secondary">Android</div>
+                </div>
+                <div id="fill" style="background-color: rgba(129, 129, 129, 0.596);">
+                   <div class="text-center text-secondary">ReactNative</div>
+                </div>
+                <div id="fill" style="background-color: rgba(255, 68, 0, 0.626);">
+                  <div class="text-center text-danger">More...</div>
+                </div>
+              </div>  
+             </div>
+              <div class="bg-light shadow-lg" id="post">
+              <div class="bg-light shadow-lg" id="post-child">
+                        <div class="fs-6 fw-bold text-denger text-center">Software Architect</div>
+              </div>
+              <div id="general-item">
+                <div id="fill" style="background-color: rgba(255, 99, 71, 0.532);">
+                  <div class="text-center text-danger">CSA</div>
+                </div>
+                <div id="fill"  style="background-color: rgba(129, 129, 129, 0.596);">
+                  <div class="text-center text-secondary">Dell EMC</div>
+                </div>
+                <div id="fill" style="background-color: rgba(129, 129, 129, 0.596);">
+                   <div class="text-center text-secondary">CISSP</div>
+                </div>
+                <div id="fill" style="background-color: rgba(255, 68, 0, 0.626);">
+                  <div class="text-center text-danger">More...</div>
+                </div>
+              </div>  
+             </div>
+              <div class="bg-light shadow-lg" id="post">
+              <div class="bg-light shadow-lg" id="post-child">
+                        <div class="fs-6 fw-bold text-success text-center">Chief Technology Officer</div>
+              </div>
+              <div id="general-item">
+                <div id="fill" style="background-color: rgba(255, 99, 71, 0.532);">
+                  <div class="text-center text-danger">PMI Agile</div>
+                </div>
+                <div id="fill"  style="background-color: rgba(129, 129, 129, 0.596);">
+                  <div class="text-center text-secondary">CSM</div>
+                </div>
+                <div id="fill" style="background-color: rgba(129, 129, 129, 0.596);">
+                   <div class="text-center text-secondary">CISSP</div>
+                </div>
+                <div id="fill" style="background-color: rgba(255, 68, 0, 0.626);">
+                  <div class="text-center text-danger">More...</div>
+                </div>
+              </div>  
+             </div>
+              <div class="bg-light shadow-lg" id="post">
+              <div class="bg-light shadow-lg" id="post-child">
+                        <div class="fs-6 fw-bold text-primary text-center">Enterprise Architect</div>
+              </div>
+              <div id="general-item">
+                <div id="fill" style="background-color: rgba(255, 99, 71, 0.532);">
+                  <div class="text-center text-danger">PMI Agile</div>
+                </div>
+                <div id="fill"  style="background-color: rgba(129, 129, 129, 0.596);">
+                  <div class="text-center text-secondary">CSM</div>
+                </div>
+                <div id="fill" style="background-color: rgba(129, 129, 129, 0.596);">
+                   <div class="text-center text-secondary">CISSP</div>
+                </div>
+                <div id="fill" style="background-color: rgba(255, 68, 0, 0.626);">
+                  <div class="text-center text-danger">More...</div>
+                </div>
+              </div>  
+             </div>
+              <div class="bg-light shadow-lg" id="post">
+              <div class="bg-light shadow-lg" id="post-child">
+                        <div class="fs-6 fw-bold text-danger text-center">Software Engineering</div>
+              </div>
+              <div id="general-item">
+                <div id="fill" style="background-color: rgba(255, 99, 71, 0.532);">
+                  <div class="text-center text-danger">ITIL</div>
+                </div>
+                <div id="fill"  style="background-color: rgba(129, 129, 129, 0.596);">
+                  <div class="text-center text-secondary">PMP</div>
+                </div>
+                <div id="fill" style="background-color: rgba(129, 129, 129, 0.596);">
+                   <div class="text-center text-secondary">CSM</div>
+                </div>
+                <div id="fill" style="background-color: rgba(255, 68, 0, 0.626);">
+                  <div class="text-center text-danger">More...</div>
+                </div>
+              </div>  
+             </div>
+              <div class="bg-light shadow-lg" id="post">
+              <div class="bg-light shadow-lg" id="post-child">
+                        <div class="fs-6 fw-bold text-danger text-center">Technical Program</div>
+              </div>
+              <div id="general-item">
+                <div id="fill" style="background-color: rgba(255, 99, 71, 0.532);">
+                  <div class="text-center text-danger">ITIL</div>
+                </div>
+                <div id="fill"  style="background-color: rgba(129, 129, 129, 0.596);">
+                  <div class="text-center text-secondary">PMP</div>
+                </div>
+                <div id="fill" style="background-color: rgba(129, 129, 129, 0.596);">
+                   <div class="text-center text-secondary">CSM</div>
+                </div>
+                <div id="fill" style="background-color: rgba(255, 68, 0, 0.626);">
+                  <div class="text-center text-danger">More...</div>
+                </div>
+              </div>  
+             </div>
+              <div class="bg-light shadow-lg" id="post">
+              <div class="bg-light shadow-lg" id="post-child">
+                        <div class="fs-6 fw-bold text-danger text-center">Software Architect</div>
+              </div>
+              <div id="general-item">
+                <div id="fill" style="background-color: rgba(255, 99, 71, 0.532);">
+                  <div class="text-center text-danger">OCM</div>
+                </div>
+                <div id="fill"  style="background-color: rgba(129, 129, 129, 0.596);">
+                  <div class="text-secondary text-center">PMP</div>
+                </div>
+                <div id="fill" style="background-color: rgba(129, 129, 129, 0.596);">
+                   <div class="text-center text-secondary">Mango DB</div>
+                </div>
+                <div id="fill" style="background-color: rgba(255, 68, 0, 0.626);">
+                  <div class="text-center text-danger">More...</div>
+                </div>
+              </div>  
+             </div>
+              <div class="bg-light shadow-lg" id="post">
+              <div class="bg-light shadow-lg" id="post-child">
+                        <div class="fs-6 fw-bold text-danger text-center">Data warehouse architect</div>
+              </div>
+              <div id="general-item">
+                <div id="fill" style="background-color: rgba(255, 99, 71, 0.532);">
+                  <div class="text-center text-danger">React</div>
+                </div>
+                <div id="fill"  style="background-color: rgba(129, 129, 129, 0.596);">
+                  <div class="text-secondary text-center" >Node JS</div>
+                </div>
+                <div id="fill" style="background-color: rgba(129, 129, 129, 0.596);">
+                   <div class="text-center text-secondary">Mango DB</div>
+                </div>
+                <div id="fill" style="background-color: rgba(255, 68, 0, 0.626);">
+                  <div class="text-center text-danger">More...</div>
+                </div>
+              </div>  
+             </div>
+             <div class="bg-light shadow-lg" id="post">
+             <div class="bg-light shadow-lg" id="post-child">
+              <div class="fw-bold text-primary text-center">Data Science</div>
+             </div>
+             <div id="general-item">
+                <div id="fill" style="background-color: rgba(255, 99, 71, 0.532);">
+                  <div class="text-center text-danger">React</div>
+                </div>
+                <div id="fill" style="background-color: rgba(129, 129, 129, 0.596);">
+                  <div class="text-secondary text-center">NodeJs</div>
+                </div>
+                <div id="fill" style="background-color: rgba(129, 129, 129, 0.596);">
+                   <div class="text-center text-secondary">Mongodb</div>
+                </div>
+                <div id="fill" style="background-color: rgba(255, 68, 0, 0.626);">
+                  <div class="text-center text-danger">More...</div>
+                </div>
+              </div>  
+             </div>
+          </div>
+          <div class="movement">
+            <div class="up">
+          <div class="up-part">⇑</div>
+          </div>
+          <div class="down">
+          <div class="down-part">⇓</div>
+          </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="container-xxl bg-body mt-5">
+        <div class="fs-3 mt-5 fw-bold text-secondary text-center">We connect you with the best talents. Here’s how.</div>
+        <div class="row justify-content-center">
+          <div class="col-sm-4 col-lg-5">
+              <div class="p-5 bg-secondary mt-5 shadow p-3 mb-5 bg-body rounded" style="height: 60vh;">
+                <div id="screen" class="bg-primary">
+                <img id="image" src="https://menaget.com/img/engineering-icon.990606dc.svg">
+                </div>
+                <div class="text-secondary fs-3 fw-bold mt-2">Technology Screening:</div>
+                <div>We match you with people whose expertise have been vetted and can be vouched for in different skills, frameworks, algorithms, data structures, system architecture, product management, business analytics, remote working ethics, and essential soft skills.</div>
+              </div>
+          </div>
+          <div class="col-sm-4 col-lg-5">
+            <div class="p-5 bg-secondary sm-mt-0 mt-5 shadow p-3 mb-5 bg-body rounded" style="height: 60vh;">
+              <div id="screen" class="bg-primary">
+                <img class="w-50" id="image" src="img/qr-code-scan__1_-removebg-preview.png">
+                </div>
+                <div class="text-secondary fs-3 fw-bold mt-2">Performance History:</div>
+                <div>We ensure the deployment of individuals with proven track records. We’ll perform all the previous employment, background, and security checks.</div>
+            </div>
+          </div>
+        </div>
+        <div class="row justify-content-center sm-justify-content-between">
+          <div class="col-sm-4 col-lg-5">
+              <div class="p-5 bg-secondary mt-0 shadow p-3 mb-5 bg-body rounded" style="height: 60vh;">
+                <div id="screen" class="bg-primary">
+                  <img class="w-50" id="image" src="img/customer-service-removebg-preview.png">
+                  </div>
+                  <div class="text-secondary fs-3 fw-bold mt-2">Soft Skills:</div>
+                  <div>We understand that it takes more than just technical skills to make a team work. That’s why we make it a point to deploy only people who have excellent soft skills to match to make up or join your team.</div>
+              </div>
+          </div>
+          <div class="col-sm-4 col-lg-5">
+            <div class="p-5 bg-secondary mt-0 shadow p-3 mb-5 bg-body rounded" style="height: 60vh;">
+            <div id="screen" class="bg-primary">
+              <img class="w-50" id="image" src="img/online-class-removebg-preview.png">
+              </div>
+              <div class="text-secondary fs-3 fw-bold mt-2">Continuous Support:</div>
+              <div>We don’t just connect you with talents; we help with the onboarding process and consistent skill growth. You can bank on our support 24/7.</div>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-light">
+      <div class="bg-light">
+      <div id="right" class="container-xxl bg-light w-100 " style="height: 100vh;">
+           <img class="float-end" src="https://menaget.com/img/circle.f31b461c.svg">
+          <div class="gallery m-5">
+            <div class="gallery-container">
+              <img class="gallery-item gallery-item-1" src="img/mokhatat.d5838139.png" data-index="1">
+              <img class="gallery-item gallery-item-2" src="img/qlea.20cf537b.png" data-index="2">
+              <img class="gallery-item gallery-item-3" src="img/backpack.ec3a67d2.png" data-index="3">
+            </div>
+          </div>
+          <div class="container-sm float-end bg-light" style="width: 50%; margin-top:-35%;">
+            <div class="container-lg text-danger fs-5 fw-bold">Here’s what some of our clients have to say.</div>
+            <div class="mt-3 m-2">I have had fantastic experience working with Menaget developers.<br>
+               They easily key into the organization vision and help drive it.</div>
+               <div class="mt-4 m-2">Suhaib Halawani
+                   <br>
+                CEO Backpack LLC.
+                    <br>
+                https://www.backpack.sa/</div>
+          </div>
+      </div>
+      </div>
+      <div id="small" class="container-xxl">
+        <div class="container-xxl bg-light" style="width: 100%;">
+          <div class="container-lg text-danger fs-5 fw-bold">Here’s what some of our clients have to say.</div>
+          <div class="mt-3 m-2">I have had fantastic experience working with Menaget developers.<br>
+             They easily key into the organization vision and help drive it.</div>
+             <div class="mt-4 m-2"><div class="fw-bold">Suhaib Halawani</div>
+                 <br>
+              CEO Backpack LLC.
+                  <br>
+              https://www.backpack.sa/</div>
+        </div>
+        <div class="container-lg text-danger fs-5 mt-5 fw-bold">Here’s what some of our clients have to say. </div>
+        <div class="mt-3 m-2">Menaget helped us create a working application<br> that fits our business goal. They also helped us<br>
+           maintain the applications professionally</div>
+           <div class="mt-4 m-2"><div class="fw-bold">fahad salah</div>
+            <br>
+              CEO Queanabb LLC.
+            </div>
+            <div class="container-lg text-danger fs-5 mt-5 fw-bold">Here’s what some of our clients have to say. </div>
+            <div class="mt-3 m-2">Menaget provided full tech support beyond our <br>
+            expectations. They took care of everything from<br>
+             UI/UX design to a fully functioning application.</div> 
+             <div class="mt-4 m-2"><div class="fw-bold">Read Rakkah</div>
+              <br>
+           CEO mokhatat LLC.
+   </div>
+      </div>
+      </div>
+      <div class="bg-light">
+<div class="bg-light" id="map-cover">
+  <div id="image-image">
+  <img class="mt-5 float-end m-5" id="operator-image" src="https://menaget.com/img/specification.5fb6c922.svg">
+  </div>
+   <div id="Hmmmmm" style="margin-left:70px;">
+    <div class="fs-5 p-9" style="padding-top: 150px;">What we offer</div>
+    <div class="fs-3 fw-bold p-9" style="padding-top: 30px;">Quick Hiring</div>
+    <div style="padding-top: 10px;">Hire top talent within 2 days. We offer flexible hiring from a single<br>
+      devloper to building a full structured technology team with flexible<br>
+       engagements from hourly to full-time.</div>
+       <button type="button" class="btn btn-light border-primary btn-lg text-primary mt-4">Start Hiring</button>
+
+  </div>
+</div>
+</div>
+<div id="develop" class="container-xxl w-100 bg-light p-5">
+<div id="offer" style="margin-left: 700px;">
+  <div class="fs-5" style="padding-top: 80px;">What we offer</div>
+  <div class="fs-3 fw-bold" style="padding-top: 0px;">Product Development</div>
+  <div style="padding-top: 10px;">We offer perfect product development solution. We see you<br>
+     through the journey from idea till you scale. We handle fresh<br>
+     project and also scale up / maintain existing products.</div>
+     <button type="button" class="btn btn-primary border-primary btn-lg text-light mt-4">Start a Project</button>
+</div>
+<div id="offer-me">
+  <div class="fs-5" style="padding-top: 80px;">What we offer</div>
+  <div class="fs-3 fw-bold" style="padding-top: 0px;">Product Development</div>
+  <div style="padding-top: 10px;">We offer perfect product development solution. We see you<br>
+     through the journey from idea till you scale. We handle fresh<br>
+     project and also scale up / maintain existing products.</div>
+     <button type="button" class="btn btn-primary border-primary btn-lg text-light mt-4">Start a Project</button>
+</div>
+<div id="offer-image">
+  <img id="offer-image-me" style="margin-left: 200px; margin-top: -300px; width: 30%;" src="https://menaget.com/img/execute-project.375e9d44.svg">
+</div>
+</div>
+<div class="bg-light p-5">
+  <div class="bg-light" id="map-cover">
+    <div id="image-image">
+    <img class="mt-5 float-end m-5" id="operator-image" src="https://menaget.com/img/schedule.c9001b8b.svg">
+    </div>
+    <div id="image-write-up">
+      <div class="fs-5 p-9" style="padding-top: 150px;">What we offer</div>
+      <div class="fs-3 fw-bold p-9" style="padding-top: 30px;">Talent Grooming</div>
+      <div style="padding-top: 10px;">We have a system that allows people to join as a newbie, learn<br>
+        from the best in their respective fields and in a structured manner,<br>
+        and grow their technical and soft skills, preparing them for real-life<br>
+        career opportunities.
+      </div>
+         <button type="button" class="btn btn-light border-primary btn-lg text-primary mt-4">Join Fichub</button>
+  
+    </div>
+  </div>
+  </div>
+  <div id="general-circle" class="container-xxl bg-light">
+    <div class="circle-image w-75" style="margin-left: 80px;">
+      <svg width="1150" height="400" viewBox="0 0 1150 400" fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <rect width="1150" height="400" rx="10" fill="#F2FAFC"/>
+      <circle cx="1042" cy="187" r="44" fill="white"/>
+      <circle cx="713" cy="47" r="29" fill="white"/>
+      <circle cx="586" cy="177" r="23" fill="white"/>
+      <div class="general">
+      <div style="margin-top: -100px;">
+        <img class="w-50 h-75 " style="margin-top: -225px; margin-left:600px" src="img/customer-removebg-preview.png">
+      </div>
+      </div>
+      <div class="container" style="margin-top: -180px;">
+        <div class="fs-3 fw-bold" style="margin-left: 30px;" id="real">Real Time Support</div>
+        <div class="mt-3" style="margin-left: 30px;">We offer real time to support, Providing solutions to all your <br> questions.</div>
+        <button type="button" class="btn btn-primary border-primary btn-lg text-light mt-4" style="margin-left: 30px;">Talk to Us</button>
+        </div>
+      </div> 
+    </svg>
+    </div> 
+    <div class="bg-light footer">
+      <div class="footer-part p-5">
+        <div class="fs-5 fw-bold" style="margin-top: 50px;">Subscribe to our business insight newsletter</div>
+        <input id="text" class="mt-4 w-75" style="height: 45px; border-radius: 10px;" type="text" placeholder="Enter email address"><button id="button" class="bg-primary" style="width: 20%; height: 45px; margin-left: 10px; border-radius: 10px;">Send >></button>
+        <div class="mt-3">256 Chapman road STE 105-4 Newark,<br> Delaware, USA.</div>
+        <div class="mt-3">
+          3rd FLoor, Batelco Building Manama,<br> Bahrain.
+        </div>
+        <div class="mt-3">info@Fichub.com</div>
+        <div class="mt-5">Copyright 2021 Menaget. All rights reserved.</div>
+      </div>
+       <div class=" bg-light p-5 footer-part-1">
+        <div class="fw-bold fs-5" style="margin-top: 150px;">Legal</div><div class="fw-bold fs-5" style="margin-left: 300px; margin-top: -27px;">Social Link</div>
+        <div class="mt-5">Team and Condition</div>
+
+       </div>
+    </div>     
+   
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+ </script> 
+
+ <script type="text/javascript" lang="javascript">
+  let scrollcontroller = document.querySelector("#table-child");
+  let upbnt = document.querySelector(".up-part");
+  let downbnt = document.querySelector(".down-part");
+
+  let x = 0;
+
+  upbnt.onclick = function(){
+    x = x - 500;
+    scrollcontroller.style.top = x + "px";
+  };  
+ </script>
+ 
+
+</body>
+</html>

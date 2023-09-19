@@ -1,0 +1,19 @@
+#slide{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
+#slide1{
+    display: grid;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+#idea{
+ margin-top: 300px;
+}
+@media screen and (max-width:980px) {
+    #banner{
+        display: none;
+    }
+}
